@@ -80,3 +80,27 @@ for (i in t) {
   plot(d$DATE2, d$TEMP, type = "l", main = d$SONDE[1])
   write.csv(d, file = paste(d$SONDE[1],"bis.txt"))
 }
+
+setwd("/Users/nicolas/Desktop/TT 2016?")
+list.files()
+b <- read.table("nl2.txt", sep = "\t", dec = ",", h = T)
+b <- read.csv("nl13.csv", sep = ";", dec = ",", h = T)
+head(b)
+b$DATE2 <- strptime(b$DATE, format = "%d-%m-%Y %H:%M:%S")
+b$SONDE <- "NL-2"
+b$SONDE <- "NL-13"
+plot(b$DATE2, b$TEMP, main = b$SONDE[1], type = "l")
+
+setwd("/Users/nicolas/OneDrive - Université de Moncton/Doc doc doc/Ph.D. - RAW DATA/GOOSE-TinyTags/TinyTags_2016/txt")
+
+t <- list.files()
+for (i in t) {
+  d <- read.table(i, sep = "\t", dec = ",", h = T)
+  d$DATE2 <- strptime(d$DATE, format = "%d-%m-%Y %H:%M:%S")
+  d$SONDE <- i
+  d$SONDE <- gsub(".txt", "", d$SONDE)
+  print(summary(d))
+  print(head(d))
+  plot(d$DATE2, d$TEMP, type = "l", main = d$SONDE[1])
+  write.csv(d, file = paste(d$SONDE[1],"bis.txt"))
+}
