@@ -39,3 +39,44 @@ install.packages("gdata")
 library(gdata)
 ?read.xls
 read.xls(xls = "/home/claire/Documents/GitHub/Tiny-tags/2017/NL-11.xls",skip="50")
+
+setwd("/Users/nicolas/OneDrive - Université de Moncton/Doc doc doc/Ph.D. - RAW DATA/GOOSE-TinyTags/TinyTags_2017/txt")
+d <- read.table("NL-6-MESWAT-187.txt", sep = "\t", dec = ",", h = T)
+head(d)
+d$DATE2 <- strptime(d$DATE, format = "%d-%m-%Y %H:%M:%S")
+d$SONDE <- "NL-6"
+summary(d)
+plot(d$DATE2, d$TEMP, type = "l", main = d$SONDE[1])
+
+d <- read.table("NL-11.txt", sep = "\t", dec = ",", h = T)
+head(d)
+d$DATE2 <- strptime(d$DATE, format = "%d-%m-%Y %H:%M:%S")
+d$SONDE <- "NL-11"
+summary(d)
+plot(d$DATE2, d$TEMP, type = "l", main = d$SONDE[1])
+
+d <- read.table("NL-2.txt", sep = "\t", dec = ",", h = T)
+head(d)
+d$DATE2 <- strptime(d$DATE, format = "%d-%m-%Y %H:%M:%S")
+d$SONDE <- "NL-2"
+summary(d)
+plot(d$DATE2, d$TEMP, type = "l", main = d$SONDE[1])
+
+d <- read.table("NL-5.txt", sep = "\t", dec = ",", h = T)
+head(d)
+d$DATE2 <- strptime(d$DATE, format = "%d-%m-%Y %H:%M:%S")
+d$SONDE <- "NL-5"
+summary(d)
+plot(d$DATE2, d$TEMP, type = "l", main = d$SONDE[1])
+
+t <- list.files()
+for (i in t) {
+  d <- read.table(i, sep = "\t", dec = ",", h = T)
+  d$DATE2 <- strptime(d$DATE, format = "%d-%m-%Y %H:%M:%S")
+  d$SONDE <- i
+  d$SONDE <- gsub(".txt", "", d$SONDE)
+  print(summary(d))
+  print(head(d))
+  plot(d$DATE2, d$TEMP, type = "l", main = d$SONDE[1])
+  write.csv(d, file = paste(d$SONDE[1],"bis.txt"))
+}
